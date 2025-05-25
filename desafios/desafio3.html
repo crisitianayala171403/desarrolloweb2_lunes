@@ -12,18 +12,20 @@
     let cantidad = parseInt(prompt("¿CUÁNTOS NECESITÁS?"));
 
     if (cantidad >= 5) {
-        let precioConRecargo = precioUnitario * 1.10;
+        let precioConRecargo = precioUnitario  * 1.10;
         alert(
             "Has comprado más de 5 artículos, tiene un recargo del 10%.\n" +
             "Producto: " + nombreProducto + "\n" +
             "Precio original: $" + precioUnitario.toFixed(2) + "\n" +
-            "Precio con recargo: $" + precioConRecargo.toFixed(2)
+            "Precio con recargo: $" + precioConRecargo.toFixed(2) * cantidad + "\n" +
+            "cantidad comprada" + cantidad
         );
     } else {
         alert(
             "No se aplicó recargo.\n" +
             "Producto: " + nombreProducto + "\n" +
-            "Precio: $" + precioUnitario.toFixed(2)
+            "Precio: $" + precioUnitario.toFixed(2) * cantidad + "\n" +
+            "cantidad comprada" + cantidad
         );
     }
 </script>
