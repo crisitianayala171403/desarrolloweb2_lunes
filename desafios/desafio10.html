@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Mini Tienda</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      background: #f4f6f9;
+      color: #333;
+    }
+
+    header {
+      background: #4bbecf;
+      padding: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: white;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    #product-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      padding: 20px;
+      gap: 20px;
+    }
+
+    .card {
+      background: white;
+      padding: 15px;
+      border-radius: 10px;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+      transition: transform 0.2s;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+    }
+
+    .card img {
+      max-width: 100%;
+      border-radius: 10px;
+    }
+
+    .card h2 {
+      font-size: 18px;
+      margin: 10px 0 5px;
+    }
+
+    .card button {
+      background: #4bbecf;
+      color: white;
+      border: none;
+      padding: 10px;
+      width: 100%;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .card button:disabled {
+      background: gray;
+      cursor: not-allowed;
+    }
+
+    .card button:hover:not(:disabled) {
+      background: #4096a4;
+    }
+
+    .stock {
+      font-size: 14px;
+      color: #666;
+      margin-top: 5px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🛍️ Tienda Cristian</h1>
+    <div id="cart">🛒 Carrito (<span id="cart-count">0</span>)</div>
+  </header>
+
+  <main id="product-list"></main>
+
+  <script>
+    const products = [
+      {
+        id: 1,
+        name: "Remera tech",
+        price: 3500,
+        stock: 10,
+        image: "https://via.placeholder.com/250x150.png?text=Remera+tech"
+      },
+      {
+        id: 2,
+        name: "Zapatillas pro",
+        price: 8900,
+        stock: 10,
+        image: "https://via.placeholder.com/250x150.png?text=Zapatillas+pro"
+      },
+      {
+        id: 3,
+        name: "Gorra cool",
+        price: 2000,
+        stock: 10,
+        image: "https://via.placeholder.com/250x150.png?text=Gorra+cool"
+      }
+    ];
+
+    let cartCount = 0;
+    const productList = document.getElementById('product-list');
+    const cartCountElement = document.getElementById('cart-count');
+
+    products.forEach(product => {
+      const card = document.createElement('div');
+      card.classList.add('card');
+
+      const button = document.createElement('button');
+      button.textContent = "Agregar al carrito";
+
+      const stockText = document.createElement('div');
+      stockText.className = "stock";
+      stockText.textContent = `Stock: ${product.stock}`;
+
+      button.onclick = () => {
+        if (product.stock > 0) {
+          product.stock--;
+          cartCount++;
+          cartCountElement.textContent = cartCount;
+          stockText.textContent = `Stock: ${product.stock}`;
+          if (product.stock === 0) button.disabled = true;
+        }
+      };
+
+      card.innerHTML = `
+        <img src="${product.image}" alt="${product.name}">
+        <h2>${product.name}</h2>
+        <p>$${product.price}</p>
+      `;
+      card.appendChild(stockText);
+      card.appendChild(button);
+      productList.appendChild(card);
+    });
+  </script>
+</body>
+</html>
